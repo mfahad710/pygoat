@@ -20,5 +20,16 @@ jobs:
       run: pip install bandit
 
     - name: Run Bandit Scan
+    #   Run Simple bandit on the codebase
     #   run: bandit -r .
-      run: bandit -ll -ii -r .
+    #   Run Bandit that only check medium and high severity and confidence
+    #   run: bandit -ll -ii -r .
+    #  Run Bandit with a configuration file
+      run: bandit -ll -ii -r . -f json -o bandit-report.json
+
+    - name: Upload Bandit Report
+      uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: bandit-findings
+        path: bandit-report.json
